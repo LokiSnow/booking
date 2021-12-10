@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+}
+
+group 'scb'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'joda-time:joda-time:2.10.13'
+    implementation 'com.alibaba:fastjson:1.2.78'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+jar {
+    archivesBaseName = 'booking'
+    archiveVersion = '1.0'
+    manifest {
+        attributes(
+                "Manifest-Version": 1.0,
+                'Main-Class': 'com.scb.booking.BookingApplication'
+        )
+    }
+    
+    from {
+        (configurations.runtimeClasspath).collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+}
